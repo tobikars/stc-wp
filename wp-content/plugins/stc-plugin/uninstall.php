@@ -11,7 +11,7 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 }
 
 // Clear database stored data
-$scans = get_posts( array( 'post_type' => 'scans', 'numberposts' => -1) );
-foreach( $scans as $scan ) {
-    wp_delete_post( $scan->ID, true);
+$scanresults = get_posts( array( 'post_type' => 'scanresult', 'numberposts' => -1) );
+foreach( $scanresults as $scanresult ) {
+    wp_delete_post( $scanresult->ID, true);
 }
