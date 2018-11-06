@@ -2,9 +2,9 @@
 /** 
  * @package STCPlugin
  */
+namespace Inc;
 
-
- class StcPluginDeactivate 
+ class Deactivate 
  {
      public static function deactivate() {
          flush_rewrite_rules();

@@ -35,6 +35,15 @@ or write to the Free Software Foundation, Inc.,
 
 defined( 'ABSPATH' ) or die( ' Wordpress needs to be running, or NO ACCESS FOR YOU!' );
 
+if ( file_exists( dirname( __FILE__ ). '/vendor/autoload.php')) {
+    require_once dirname( __FILE__ ). '/vendor/autoload.php';
+}
+
+use Inc\Activate;
+use Inc\Deactivate;
+
+if (!class_exists('STCPlugin')) {
+
 // ScanTrustConsumer STC Plugin
 class STCPlugin 
 {
@@ -85,20 +94,26 @@ class STCPlugin
         wp_enqueue_style('stcstyle', plugins_url('/assets/css/stc.css' , __FILE__ ) );
         wp_enqueue_script('stc.js', plugins_url('/assets/js/stc.js' , __FILE__ ) );
     }
+
+    function activate() {
+        Activate::activate();
+    }
+
+    function deactivate() {
+        Deactivate::deactivate();
+    }
+
 }
 
-if ( class_exists( 'STCPlugin') ) {
-    $stcPlugin = new STCPlugin();
-    $stcPlugin->register();
-}
+$stcPlugin = new STCPlugin();
+$stcPlugin->register();
 
 // activation:
-require_once plugin_dir_path( __FILE__ ) . 'inc/stc-plugin-activate.php';
-register_activation_hook( __FILE__, array( 'StcPluginActivate', 'activate') );
+// require_once plugin_dir_path( __FILE__ ) . 'inc/stc-plugin-activate.php';
+register_activation_hook( __FILE__, array( $stcPlugin, 'activate') );
 
 // deactivation:
-require_once plugin_dir_path( __FILE__ ) . 'inc/stc-plugin-deactivate.php';
-register_deactivation_hook( __FILE__, array( 'StcPluginDeactivate', 'deactivate') );
+// require_once plugin_dir_path( __FILE__ ) . 'inc/stc-plugin-deactivate.php';
+register_deactivation_hook( __FILE__, array( $stcPlugin, 'deactivate') );
 
-// uninstall:
-// not done for now. 
+}

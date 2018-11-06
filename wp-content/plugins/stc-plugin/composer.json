@@ -1,0 +1,17 @@
+{
+    "name": "tobiaskars/stc-plugin",
+    "description": "ScanTrust Wordpress plugin",
+    "type": "project",
+    "license": "GPL",
+    "authors": [
+        {
+            "name": "tobikars",
+            "email": "tobikars@gmail.com"
+        }
+    ],
+    "minimum-stability" : "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {"Inc\\": "./inc"}        
+    }
+}
