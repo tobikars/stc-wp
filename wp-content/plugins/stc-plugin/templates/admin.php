@@ -1,0 +1,1 @@
+<h1>ScanTrust Plugin</h1>
