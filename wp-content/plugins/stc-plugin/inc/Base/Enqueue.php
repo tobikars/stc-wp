@@ -4,7 +4,9 @@
  */
 namespace Inc\Base;
 
-class Enqueue 
+use \Inc\Base\BaseController;
+
+class Enqueue extends BaseController
  {
     public function register() {
         // for non-admin FE: add_action( 'wp_enqueue_scripts', array( $this, 'enqueue'));
@@ -12,8 +14,8 @@ class Enqueue
     }
 
     public function enqueue() {
-        wp_enqueue_style( 'stc.css', PLUGIN_URL . 'assets/css/stc.css' );
-        wp_enqueue_script( 'stc.js', PLUGIN_URL . 'assets/js/stc.js' );
+        wp_enqueue_style( 'stc.css', $this->plugin_url . 'assets/css/stc.css' );
+        wp_enqueue_script( 'stc.js', $this->plugin_url . 'assets/js/stc.js' );
     }
 
 }
