@@ -35,85 +35,31 @@ or write to the Free Software Foundation, Inc.,
 
 defined( 'ABSPATH' ) or die( ' Wordpress needs to be running, or NO ACCESS FOR YOU!' );
 
+//autoload from Inc folder:
 if ( file_exists( dirname( __FILE__ ). '/vendor/autoload.php')) {
     require_once dirname( __FILE__ ). '/vendor/autoload.php';
 }
 
-use Inc\Activate;
-use Inc\Deactivate;
+//Define Constants
+define( 'PLUGIN_PATH', plugin_dir_path( __FILE__ ));
+define( 'PLUGIN_URL', plugin_dir_url( __FILE__ ));
+define( 'PLUGIN' , plugin_basename( __FILE__ ));
 
-if (!class_exists('STCPlugin')) {
+use Inc\Base\Activate;
+use Inc\Base\Deactivate;
 
-// ScanTrustConsumer STC Plugin
-class STCPlugin 
-{
-    public $plugin;
-
-    function __construct() { 
-        // add_action( 'init', array( $this, 'custom_post_type' ) );
-        $this->plugin = plugin_basename( __FILE__ );
-    } 
-
-    function register() {
-        // for non-admin FE: add_action( 'wp_enqueue_scripts', array( $this, 'enqueue'));
-        add_action( 'admin_enqueue_scripts', array( $this, 'enqueue'));
-        add_action('admin_menu', array( $this, 'add_admin_pages'));
-        add_filter("plugin_action_links_$this->plugin", array( $this, 'settings_link'));
-    }
-
-    function settings_link( $links ) {
-        // add custom settings link
-        $settings_link = '<a href="admin.php?page=scantrust_plugin">Settings</a>';
-        array_push($links, $settings_link);
-        return $links;
-    }
-
-    function add_admin_pages() {
-        // add_menu_page(('ScanTrust Plugin'), 'ScanTrust', 'manage_options', 'scantrust_plugin', array( $this, 'admin_index'), 'dashicons-location-alt' , 110);
-        add_menu_page(('ScanTrust Plugin'), 'ScanTrust', 'manage_options', 'scantrust_plugin', array( $this, 'admin_index'), plugins_url('/assets/icons/st-symbol.png' , __FILE__ ) , 110);
-        
-    }
-
-    function admin_index() {
-        // require template
-        require_once plugin_dir_path( __FILE__ ) . 'templates/admin.php';
-    }
-
-    function uninstall() {
-        // delete custom post type
-        // delete all the plugin data from the DB
-    }
-
-    function custom_post_type() {
-        register_post_type( 'scanresult', ['public' => true, 'label' => 'Scan Results']);
-    }
-
-
-    function enqueue() {
-        //enqueue 
-        wp_enqueue_style('stcstyle', plugins_url('/assets/css/stc.css' , __FILE__ ) );
-        wp_enqueue_script('stc.js', plugins_url('/assets/js/stc.js' , __FILE__ ) );
-    }
-
-    function activate() {
-        Activate::activate();
-    }
-
-    function deactivate() {
-        Deactivate::deactivate();
-    }
-
+// Run during plugin activation and deactivation:
+function activate_stc_plugin() {
+  Activate::activate();
 }
 
-$stcPlugin = new STCPlugin();
-$stcPlugin->register();
+function deactivate_stc_plugin() {
+    Deactivate::deactivate();
+}
 
-// activation:
-// require_once plugin_dir_path( __FILE__ ) . 'inc/stc-plugin-activate.php';
-register_activation_hook( __FILE__, array( $stcPlugin, 'activate') );
+register_activation_hook( __FILE__, 'activate_stc_plugin' );
+register_deactivation_hook( __FILE__, 'deactivate_stc_plugin' );
 
-// deactivation:
-// require_once plugin_dir_path( __FILE__ ) . 'inc/stc-plugin-deactivate.php';
-register_deactivation_hook( __FILE__, array( $stcPlugin, 'deactivate') );
-
+if (class_exists('Inc\\Init')) {
+    Inc\Init::register_services();
 }
