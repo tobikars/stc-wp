@@ -36,20 +36,20 @@ class Admin extends BaseController {
         $this->subpages = [
             [
                 'parent_slug' => 'scantrust_plugin', 
-                'page_title' => 'Custom Post Types', 
-                'menu_title' => 'CPT', 
-                'capability' => 'manage_options',
-                'menu_slug' => 'scantrust_plugin_cpt',
-                'callback' => function() { echo '<h1>Custom Post Types For ScanTrust Use (tutorial)</h1>'; }
-            ],
-            [
-                'parent_slug' => 'scantrust_plugin', 
                 'page_title' => 'Endpoint & API Settings', 
                 'menu_title' => 'Endpoint', 
                 'capability' => 'manage_options',
                 'menu_slug' => 'scantrust_plugin_endpoint',
                 'callback' => function() { echo '<h1>Endpoint & API Settings</h1>'; }
             ], 
+            [
+                'parent_slug' => 'scantrust_plugin', 
+                'page_title' => 'Custom Post Types', 
+                'menu_title' => 'CPT', 
+                'capability' => 'manage_options',
+                'menu_slug' => 'scantrust_plugin_cpt',
+                'callback' => function() { echo '<h1>Custom Post Types For ScanTrust Use (tutorial)</h1>'; }
+            ],
             [
                 'parent_slug' => 'scantrust_plugin', 
                 'page_title' => 'Campaigns', 
@@ -76,13 +76,10 @@ class Admin extends BaseController {
             ]
         ];
 
-
-
-
     }
 
     public function register() {
-        $this->settings->addPages( $this->pages )->withSubPage('Dashboard')->addSubPages( $this->subpages )->register();
+        $this->settings->addPages( $this->pages )->withSubPage('General')->addSubPages( $this->subpages )->register();
     }
 
  }

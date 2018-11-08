@@ -39,7 +39,7 @@ class SettingsApi
         $admin_page = $this->admin_pages[0];
         $sub_page = array(
             array(
-                'parent_slug' => $admin_page['parent_slug'], 
+                'parent_slug' => $admin_page['menu_slug'], 
                 'page_title' => $admin_page['page_title'], 
                 'menu_title' => ($title) ? $title : $admin_page['menu_title'], 
                 'capability' => $admin_page['capability'],
@@ -51,8 +51,6 @@ class SettingsApi
         
         return $this;
     }
-
-
 
     public function addAdminMenu() {
         foreach ( $this->admin_pages as $page) {
