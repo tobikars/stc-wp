@@ -7,6 +7,7 @@ namespace Inc\Pages;
 
 use \Inc\Base\BaseController;
 use \Inc\Api\SettingsApi;
+use \Inc\Api\Callbacks\AdminCallbacks;
 
 class Admin extends BaseController {
 
@@ -21,13 +22,15 @@ class Admin extends BaseController {
 
         $this->settings = new SettingsApi();
 
+        $this->callbacks = new AdminCallbacks();
+
         $this->pages = [
             [
                 'page_title' => 'ScanTrust Plugin', 
                 'menu_title' => 'ScanTrust', 
                 'capability' => 'manage_options',
                 'menu_slug' => 'scantrust_plugin',
-                'callback' => function() { echo '<h1>STC Plugin General Settings</h1>'; },
+                'callback' => array( $this->callbacks, 'adminDashboard' ),
                 'icon_url' => $this->plugin_icon, 
                 'position' => 110
             ]
@@ -40,7 +43,7 @@ class Admin extends BaseController {
                 'menu_title' => 'Endpoint', 
                 'capability' => 'manage_options',
                 'menu_slug' => 'scantrust_plugin_endpoint',
-                'callback' => function() { echo '<h1>Endpoint & API Settings</h1>'; }
+                'callback' => array( $this->callbacks, 'endpointDashboard')
             ], 
             [
                 'parent_slug' => 'scantrust_plugin', 
@@ -48,7 +51,7 @@ class Admin extends BaseController {
                 'menu_title' => 'CPT', 
                 'capability' => 'manage_options',
                 'menu_slug' => 'scantrust_plugin_cpt',
-                'callback' => function() { echo '<h1>Custom Post Types For ScanTrust Use (tutorial)</h1>'; }
+                'callback' => array($this->callbacks, 'cptDashboard')
             ],
             [
                 'parent_slug' => 'scantrust_plugin', 
@@ -56,7 +59,7 @@ class Admin extends BaseController {
                 'menu_title' => 'Campaign Data', 
                 'capability' => 'manage_options',
                 'menu_slug' => 'scantrust_plugin_campaigns',
-                'callback' => function() { echo '<h1>Campaign Settings</h1>'; }
+                'callback' => function() { echo '<h1>Placeholder: Campaign Settings</h1>'; }
             ],
             [
                 'parent_slug' => 'scantrust_plugin', 
@@ -64,7 +67,7 @@ class Admin extends BaseController {
                 'menu_title' => 'Product Data', 
                 'capability' => 'manage_options',
                 'menu_slug' => 'scantrust_plugin_products',
-                'callback' => function() { echo '<h1>Product Settings</h1>'; }
+                'callback' => function() { echo '<h1>Placeholder: Product Settings</h1>'; }
             ],
             [
                 'parent_slug' => 'scantrust_plugin', 
@@ -72,14 +75,14 @@ class Admin extends BaseController {
                 'menu_title' => 'Scan Data', 
                 'capability' => 'manage_options',
                 'menu_slug' => 'scantrust_plugin_scandata',
-                'callback' => function() { echo '<h1>Scan Data Collection</h1>'; }
+                'callback' => function() { echo '<h1>Placeholder: Scan Data Collection</h1>'; }
             ]
         ];
 
     }
 
     public function register() {
-        $this->settings->addPages( $this->pages )->withSubPage('General')->addSubPages( $this->subpages )->register();
+        $this->settings->addPages( $this->pages )->withSubPage('Admin')->addSubPages( $this->subpages )->register();
     }
 
  }

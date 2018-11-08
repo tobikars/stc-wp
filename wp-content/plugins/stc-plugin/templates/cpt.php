@@ -1,0 +1,1 @@
+<h1>Template: Custom Post Types For ScanTrust Use (tutorial)</h1>

@@ -1,1 +1,1 @@
-<h1>ScanTrust Plugin</h1>
+<h1>Template: admin template</h1>
