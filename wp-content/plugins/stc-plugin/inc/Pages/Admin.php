@@ -20,8 +20,10 @@ class Admin extends BaseController {
     {
         parent::__construct();
 
+        // helper class for settings
         $this->settings = new SettingsApi();
 
+        // helper class to contain callbacks for the admin section
         $this->callbacks = new AdminCallbacks();
 
         $this->pages = [
@@ -81,7 +83,74 @@ class Admin extends BaseController {
 
     }
 
+    public function setSettings() 
+    {
+        $args = array(
+            array(
+                'option_group'=> 'st_options_group',
+                'option_name' => 'text_example',
+                'callback' => array( $this->callbacks, 'stOptionsGroup')
+            ),
+            array(
+                'option_group'=> 'st_options_group',
+                'option_name' => 'first_name',
+            ),
+            
+        );
+        $this->settings->setSettings( $args );
+    } 
+
+    public function setSections() 
+    {
+        $args = array(
+            array(
+                'id'=> 'st_admin_index',
+                'title' => 'First Section',
+                'callback' => array( $this->callbacks, 'stSections'),
+                'page' => 'scantrust_plugin'
+            )
+        );
+        $this->settings->setSections( $args );
+    } 
+
+    public function setFields() 
+    {
+        $args = array(
+            array(
+                'id'=> 'text_example',
+                'title' => 'Text Example',
+                'callback' => array( $this->callbacks, 'stTextField'),
+                'page' => 'scantrust_plugin',
+                'section' => 'st_admin_index',
+                'args' => array(
+                    'label_for' => 'text_example',
+                    'class' => 'example-class'
+                ),
+            ),
+            array(
+                'id'=> 'first_name',
+                'title' => 'First Name',
+                'callback' => array( $this->callbacks, 'stTextField'),
+                'page' => 'scantrust_plugin',
+                'section' => 'st_admin_index',
+                'args' => array(
+                    'label_for' => 'first_name',
+                    'class' => 'example-class'
+                )
+            )
+        );
+        $this->settings->setFields( $args );
+    } 
+
+
+
     public function register() {
+        // populate settings / sections / fields
+        $this->setSettings();
+        $this->setSections();
+        $this->setFields();
+
+        // build the admin menu
         $this->settings->addPages( $this->pages )->withSubPage('Admin')->addSubPages( $this->subpages )->register();
     }
 
