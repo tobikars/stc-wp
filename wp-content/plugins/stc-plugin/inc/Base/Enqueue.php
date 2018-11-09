@@ -14,8 +14,8 @@ class Enqueue extends BaseController
     }
 
     public function enqueue() {
-        wp_enqueue_style( 'stc.css', $this->plugin_url . 'assets/css/stc.css' );
-        wp_enqueue_script( 'stc.js', $this->plugin_url . 'assets/js/stc.js' );
+        wp_enqueue_style( 'stc.css', $this->plugin_url . 'assets/stc.css' );
+        wp_enqueue_script( 'stc.js', $this->plugin_url . 'assets/stc.js' );
     }
 
 }
