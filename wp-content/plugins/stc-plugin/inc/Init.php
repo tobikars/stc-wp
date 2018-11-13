@@ -16,7 +16,9 @@ namespace Inc;
         return [ 
             Pages\Admin::class,
             Base\Enqueue::class,
-            Base\SettingsLinks::class
+            Base\SettingsLinks::class,
+            Base\QueryVars::class,
+            Base\ShortCodesManager::class
         ];
     }
     

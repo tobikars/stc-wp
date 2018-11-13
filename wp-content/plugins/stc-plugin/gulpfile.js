@@ -22,6 +22,7 @@ var notify       = require( 'gulp-notify' );
 var plumber      = require( 'gulp-plumber' );
 var options      = require( 'gulp-options' );
 var gulpif       = require( 'gulp-if' );
+var glob         = require( 'glob' );
 
 // Browers related plugins
 var browserSync  = require( 'browser-sync' ).create();
@@ -71,7 +72,7 @@ gulp.task( 'styles', function() {
 
 gulp.task( 'js', function() {
 	return browserify({
-		entries: [jsSRC]
+		entries: jsSRC
 	})
 	.transform( babelify, { presets: [ 'env' ] } )
 	.bundle()

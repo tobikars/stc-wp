@@ -1,1 +1,0 @@
-<h1>Template: Endpoint & API Settings</h1>

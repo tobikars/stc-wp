@@ -15,6 +15,7 @@ class Admin extends BaseController {
     public $pages = array();
     public $subpages = array();
 
+    public $shortcodes;
 
     public function __construct() 
     {
@@ -38,47 +39,48 @@ class Admin extends BaseController {
             ]
         ];
 
+        // no subpages needed for now.
         $this->subpages = [
             [
                 'parent_slug' => 'scantrust_plugin', 
-                'page_title' => 'Endpoint & API Settings', 
-                'menu_title' => 'Endpoint', 
+                'page_title' => 'Test the Endpoint and API', 
+                'menu_title' => 'Test it out', 
                 'capability' => 'manage_options',
                 'menu_slug' => 'scantrust_plugin_endpoint',
                 'callback' => array( $this->callbacks, 'endpointDashboard')
             ], 
-            [
-                'parent_slug' => 'scantrust_plugin', 
-                'page_title' => 'Custom Post Types', 
-                'menu_title' => 'CPT', 
-                'capability' => 'manage_options',
-                'menu_slug' => 'scantrust_plugin_cpt',
-                'callback' => array($this->callbacks, 'cptDashboard')
-            ],
-            [
-                'parent_slug' => 'scantrust_plugin', 
-                'page_title' => 'Campaigns', 
-                'menu_title' => 'Campaign Data', 
-                'capability' => 'manage_options',
-                'menu_slug' => 'scantrust_plugin_campaigns',
-                'callback' => function() { echo '<h1>Placeholder: Campaign Settings</h1>'; }
-            ],
-            [
-                'parent_slug' => 'scantrust_plugin', 
-                'page_title' => 'Product Settings', 
-                'menu_title' => 'Product Data', 
-                'capability' => 'manage_options',
-                'menu_slug' => 'scantrust_plugin_products',
-                'callback' => function() { echo '<h1>Placeholder: Product Settings</h1>'; }
-            ],
-            [
-                'parent_slug' => 'scantrust_plugin', 
-                'page_title' => 'Scan Data Collection', 
-                'menu_title' => 'Scan Data', 
-                'capability' => 'manage_options',
-                'menu_slug' => 'scantrust_plugin_scandata',
-                'callback' => function() { echo '<h1>Placeholder: Scan Data Collection</h1>'; }
-            ]
+            // [
+            //     'parent_slug' => 'scantrust_plugin', 
+            //     'page_title' => 'Custom Post Types', 
+            //     'menu_title' => 'CPT', 
+            //     'capability' => 'manage_options',
+            //     'menu_slug' => 'scantrust_plugin_cpt',
+            //     'callback' => array($this->callbacks, 'cptDashboard')
+            // ],
+            // [
+            //     'parent_slug' => 'scantrust_plugin', 
+            //     'page_title' => 'Campaigns', 
+            //     'menu_title' => 'Campaign Data', 
+            //     'capability' => 'manage_options',
+            //     'menu_slug' => 'scantrust_plugin_campaigns',
+            //     'callback' => function() { echo '<h1>Placeholder: Campaign Settings</h1>'; }
+            // ],
+            // [
+            //     'parent_slug' => 'scantrust_plugin', 
+            //     'page_title' => 'Product Settings', 
+            //     'menu_title' => 'Product Data', 
+            //     'capability' => 'manage_options',
+            //     'menu_slug' => 'scantrust_plugin_products',
+            //     'callback' => function() { echo '<h1>Placeholder: Product Settings</h1>'; }
+            // ],
+            // [
+            //     'parent_slug' => 'scantrust_plugin', 
+            //     'page_title' => 'Scan Data Collection', 
+            //     'menu_title' => 'Scan Data', 
+            //     'capability' => 'manage_options',
+            //     'menu_slug' => 'scantrust_plugin_scandata',
+            //     'callback' => function() { echo '<h1>Placeholder: Scan Data Collection</h1>'; }
+            // ]
         ];
 
     }
@@ -88,12 +90,24 @@ class Admin extends BaseController {
         $args = array(
             array(
                 'option_group'=> 'st_options_group',
-                'option_name' => 'text_example',
+                'option_name' => 'st_api_key',
                 'callback' => array( $this->callbacks, 'stOptionsGroup')
             ),
             array(
                 'option_group'=> 'st_options_group',
-                'option_name' => 'first_name',
+                'option_name' => 'st_helpdesk_link',
+            ),
+            array(
+                'option_group'=> 'st_options_group',
+                'option_name' => 'st_testscan_link',
+            ),
+            array(
+                'option_group'=> 'st_options_group',
+                'option_name' => 'st_api_url',
+            ),
+            array(
+                'option_group'=> 'st_options_group',
+                'option_name' => 'st_pojo_active',
             ),
             
         );
@@ -105,7 +119,7 @@ class Admin extends BaseController {
         $args = array(
             array(
                 'id'=> 'st_admin_index',
-                'title' => 'First Section',
+                'title' => 'Endpoint and API settings',
                 'callback' => array( $this->callbacks, 'stSections'),
                 'page' => 'scantrust_plugin'
             )
@@ -117,32 +131,63 @@ class Admin extends BaseController {
     {
         $args = array(
             array(
-                'id'=> 'text_example',
-                'title' => 'Text Example',
+                'id'=> 'st_api_key',
+                'title' => 'API Key',
                 'callback' => array( $this->callbacks, 'stTextField'),
                 'page' => 'scantrust_plugin',
                 'section' => 'st_admin_index',
                 'args' => array(
-                    'label_for' => 'text_example',
-                    'class' => 'example-class'
+                    'label_for' => 'st_api_key',
                 ),
             ),
             array(
-                'id'=> 'first_name',
-                'title' => 'First Name',
+                'id'=> 'st_api_url',
+                'title' => 'ScanTrust API',
                 'callback' => array( $this->callbacks, 'stTextField'),
                 'page' => 'scantrust_plugin',
                 'section' => 'st_admin_index',
                 'args' => array(
-                    'label_for' => 'first_name',
-                    'class' => 'example-class'
+                    'label_for' => 'st_api_url',
+                    'class' => 'textfield-class'
+                )
+            ),
+            array(
+                'id'=> 'st_helpdesk_link',
+                'title' => 'Helpdesk link',
+                'callback' => array( $this->callbacks, 'stTextField'),
+                'page' => 'scantrust_plugin',
+                'section' => 'st_admin_index',
+                'args' => array(
+                    'label_for' => 'st_helpdesk_link',
+                    'class' => 'textfield-class'
+                )
+            ),
+            array(
+                'id'=> 'st_testscan_link',
+                'title' => 'Test Scan link',
+                'callback' => array( $this->callbacks, 'stTextField'),
+                'page' => 'scantrust_plugin',
+                'section' => 'st_admin_index',
+                'args' => array(
+                    'label_for' => 'st_testscan_link',
+                    'class' => 'textfield-class'
+                )
+            ),
+            array(
+                'id'=> 'st_pojo_active',
+                'title' => 'Provide POJO',
+                'callback' => array( $this->callbacks, 'stCheckboxField'),
+                'page' => 'scantrust_plugin',
+                'section' => 'st_admin_index',
+                'args' => array(
+                    'label_for' => 'st_pojo_active',
+                    'class' => 'checkbox-class'
                 )
             )
+            
         );
         $this->settings->setFields( $args );
     } 
-
-
 
     public function register() {
         // populate settings / sections / fields

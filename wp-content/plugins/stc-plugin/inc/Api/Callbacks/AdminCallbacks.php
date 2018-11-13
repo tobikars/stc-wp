@@ -15,7 +15,7 @@ class AdminCallbacks extends BaseController
     }
 
     public function endpointDashboard() {
-        return require_once( "$this->plugin_path/templates/endpoints.php" );
+        return require_once( "$this->plugin_path/templates/api.php" );
     }
 
     public function cptDashboard() {
@@ -28,14 +28,29 @@ class AdminCallbacks extends BaseController
     }
 
     public function stSections() {
-        echo 'This is a section.';
+        echo <<<EOS
+            <p>This section controls the API-key needed to retrieve the details from the ScanTrust system, as well as the type of data that gets returned.<br>
+            By default, all shortcodes are active for use in pages / posts. See the <b>Shortcodes tab</b> for more details.<br>
+            To also make the data available as Javascript Objects, please check the <b>Provide POJO</b> checkbox.</p>
+EOS
+            ;
     }
 
-    // generic text field callback for admin section.
+    // generic textfield callback for admin section
     public function stTextField($args) {
         $fieldname = $args['label_for'];
+        $class = $args['class'];
         $value = esc_attr( get_option( $fieldname ));
-        echo '<input type="text" class="regular-text" name="' . $fieldname . '" value="' . $value . '" placeholder=" no value yet for ' . $fieldname . ' ">';
+        echo '<input type="text" class="' . $class . '" name="' . $fieldname . '" size="200" value="' . $value . '" placeholder="no value yet for ' . $fieldname . ' ">';
     }
+
+    // generic checkbox callback for admin section
+    public function stCheckboxField($args) {
+        $fieldname = $args['label_for'];
+        $class = $args['class'];
+        $checked = esc_attr( get_option( $fieldname ));
+        echo '<input type="checkbox" class="' . $class . '" name="' . $fieldname . '" value="1" ' . ($checked ? 'checked' : '') . '>';
+    }
+
 
 }
