@@ -35,7 +35,7 @@ var styleSRC     = './src/scss/stc.scss';
 var styleURL     = './assets/';
 var mapURL       = './';
 
-var jsSRC        = './src/js/stc.js';
+var jsSRC        = ['./src/js/stc.js', './src/js/prettify.js', './src/js/shortCodes.js', './src/js/loadResults.js'];
 var jsURL        = './assets/';
 
 var styleWatch   = './src/scss/**/*.scss';

@@ -10,7 +10,7 @@ Redirects to:<br/>
     <li>2. If no uid= parameter is used the system will set a demo-scan: <b>4083e7e5-1dc3-4d97-918f-84a91a6a8492</b></li>
     <li>3. If no qr= parameter is used the system will set a demo-qr: <b>DD599859850418MPP051822749258AF</b></li>
     <li>4. Some JS magic will happen and the pretty-printed JSON will be shown below</li>
-    <li>5. When you know it is all working, set the redirect in the ScanTrust campaign to a page and the data will be made available to the page. </li>
+    <li>5. When you know it is all working, set the redirect in the ScanTrust campaign to a page and the data will be available to the page. </li>
 </ul>
 
 <h2>Options set:</h2>
@@ -23,16 +23,17 @@ Redirects to:<br/>
 
 <h2>2. Check if the parameters are passed correctly to Wordpress:</h2>
 
-<h3>Scan UID: </h3>
-<PRE class="msg" id="st_uid_msg"></PRE>
-
 <h3>QR Code:</h3>
+<PRE class="msg" id="st_qr_queryvar_msg"></PRE>
 <PRE class="msg" id="st_qr_msg"></PRE>
 
-<h2>Show if the data was retrieved correctly:</h2>
+<h3>Scan UID: </h3>
+<PRE class="msg" id="st_uid_queryvar_msg"></PRE>
+<PRE class="msg" id="st_uid_msg"></PRE>
+
 <PRE class="msg" id="config_error_msg"></PRE>
 
 <h3>Scan JSON:</h3>
-<PRE class="msg" id="st_json"></PRE>
+<PRE class="msg" id="st-json"></PRE>
 
 

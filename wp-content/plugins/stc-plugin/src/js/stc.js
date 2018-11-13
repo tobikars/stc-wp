@@ -1,6 +1,6 @@
+import { loadResults, createPOJO } from './loadResults.js';
+import { shortCodes } from './shortCodes.js';
 
-import { loadResults } from './loadResults.js';
-import { syntaxHighlight } from './prettify.js';
 
 window.addEventListener("load", function(){
     
@@ -24,29 +24,30 @@ window.addEventListener("load", function(){
         document.querySelector(activePaneID).classList.add("active");
     }
     
-    // process parameters passed in from PHP: 
-    const st_endpoint = stParams.st_api_url; 
-    const st_api_key =  stParams.st_api_key;
-    const st_qr = stParams.st_qr;
-    const st_uid = stParams.st_uid;
-    const combined_info_url = st_endpoint + "/" + st_uid + "/combined-info/";
+    if (stParams.st_pojo_active) {    
+        // process parameters passed in from PHP: 
+        const st_endpoint = stParams.st_api_url; 
+        const st_api_key =  stParams.st_api_key;
+        const st_qr = stParams.st_qr;
+        const st_uid = stParams.st_uid;
+        let combined_info_url = st_endpoint.replace("{id}", st_uid).replace("{qr}", st_qr);
 
-    let msgs = document.querySelectorAll(".msg")
-    msgs.forEach(element => {
-        element.innerHTML = stParams[element.id];
-    });
+        let msgs = document.querySelectorAll(".msg")
+        msgs.forEach(element => {
+            element.innerHTML = stParams[element.id];
+        });
 
-    // Test namecard used:
-    // HTTPS://ST4.CH/Q/45EC0A5D100418MPP05181654E6F9D5
-    // Redirects to:
-    // https://stc.scantrust.com/team/#/product/45EC0A5D100418MPP05181654E6F9D5?uid=4083e7e5-1dc3-4d97-918f-84a91a6a8492
-    let stJson = document.querySelector("#st_json");
-    stJson.innerHTML = "LOADING....";
-    loadResults(combined_info_url, st_api_key, showScanResults);
+        // if we have an element with the ID st_json, load our JSON in there:
+        let stJson = document.querySelector("#st-json");
+        if (stJson) {
+            stJson.innerHTML = "LOADING....";
+        }
 
-    function showScanResults(jsonResults) {
-        stJson.innerHTML = syntaxHighlight(JSON.parse(jsonResults));
-        //stJson.classList.add("prettyprint");
-    }
+        loadResults(combined_info_url, st_api_key, function(jsonData){
+            console.log("Created ScanTrust Javascript object: window.stc : " + window.stc);
+            console.log("setting shortcodes:")
+            shortCodes(jsonData);
+        }); 
 
+    } 
 });

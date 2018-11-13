@@ -1,0 +1,1 @@
+<div id="st-scan" class="st-loading"></div>

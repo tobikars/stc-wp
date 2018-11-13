@@ -95,15 +95,15 @@ class Admin extends BaseController {
             ),
             array(
                 'option_group'=> 'st_options_group',
-                'option_name' => 'st_helpdesk_link',
-            ),
-            array(
-                'option_group'=> 'st_options_group',
-                'option_name' => 'st_testscan_link',
-            ),
-            array(
-                'option_group'=> 'st_options_group',
                 'option_name' => 'st_api_url',
+            ),
+            array(
+                'option_group'=> 'st_options_group',
+                'option_name' => 'st_qr_queryvar',
+            ),
+            array(
+                'option_group'=> 'st_options_group',
+                'option_name' => 'st_uid_queryvar',
             ),
             array(
                 'option_group'=> 'st_options_group',
@@ -138,6 +138,7 @@ class Admin extends BaseController {
                 'section' => 'st_admin_index',
                 'args' => array(
                     'label_for' => 'st_api_key',
+                    'class' => 'textfield-class'
                 ),
             ),
             array(
@@ -152,25 +153,25 @@ class Admin extends BaseController {
                 )
             ),
             array(
-                'id'=> 'st_helpdesk_link',
-                'title' => 'Helpdesk link',
+                'id'=> 'st_qr_queryvar',
+                'title' => 'QR tag',
                 'callback' => array( $this->callbacks, 'stTextField'),
                 'page' => 'scantrust_plugin',
                 'section' => 'st_admin_index',
                 'args' => array(
-                    'label_for' => 'st_helpdesk_link',
-                    'class' => 'textfield-class'
+                    'label_for' => 'st_qr_queryvar',
+                    'class' => 'textfield-short-class'
                 )
             ),
             array(
-                'id'=> 'st_testscan_link',
-                'title' => 'Test Scan link',
+                'id'=> 'st_uid_queryvar',
+                'title' => 'Scan UID tag',
                 'callback' => array( $this->callbacks, 'stTextField'),
                 'page' => 'scantrust_plugin',
                 'section' => 'st_admin_index',
                 'args' => array(
-                    'label_for' => 'st_testscan_link',
-                    'class' => 'textfield-class'
+                    'label_for' => 'st_uid_queryvar',
+                    'class' => 'textfield-short-class'
                 )
             ),
             array(

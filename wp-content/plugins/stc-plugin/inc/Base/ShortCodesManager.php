@@ -4,24 +4,31 @@
  */
 namespace Inc\Base;
 
-class ShortCodesManager 
+use \Inc\Base\BaseController;
+
+class ShortCodesManager extends BaseController
 {
     public function register() 
     {
-        add_shortcode('tk', array( $this,'test_shortcode'));
-        add_shortcode('st_api_key', array( $this,'st_api_key'));
+        // templated shortcodes each have a template file
+        $shortCodes = [
+            'st_json',
+            'st_scan',
+            'st_code',
+            'st_product',
+            'st_brand',
+            'st_campaign',
+        ];
         
+        foreach( $shortCodes as $shortcode ) {
+            add_shortcode($shortcode, array( $this,'loadTemplate'));    
+        }
     }
 
-    // Function to add subscribe text to posts and pages
-    public function test_shortcode() {
-        return '<h1>First name: ' . get_option("first_name") . '</h1>';
+    public function loadTemplate($atts, $content, $name ) {
+        ob_start();
+        require_once("$this->plugin_path/templates/shortcodes/$name.php");
+        return ob_get_clean();
     }
-
-    public function st_api_key() {
-        $key = get_option("st_api_key");
-        return 'API Key: ' .  ( isset($key) ? '(not set yet)' : $key );
-    }
-
 
 }

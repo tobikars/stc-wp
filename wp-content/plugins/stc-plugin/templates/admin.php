@@ -22,10 +22,6 @@
             Test your shortcodes easily at:
 
             scantrust_plugin_endpoint: 
-
-<?php
-// check for variables here:
-?>
         </div>
         <div id="tab-3" class="tab-pane">
             <h3>About this amazing plugin</h3>
