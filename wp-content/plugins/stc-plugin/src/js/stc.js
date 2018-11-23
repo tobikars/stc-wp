@@ -1,9 +1,7 @@
-import { loadResults, createPOJO } from './loadResults.js';
+import { loadResults } from './loadResults.js';
 import { shortCodes } from './shortCodes.js';
 
-
-window.addEventListener("load", function(){
-    
+window.addEventListener("load", function(){    
     // store tabs variables
     var tabs = document.querySelectorAll("ul.nav-tabs > li");
     for( let i =0; i<tabs.length; i++) {
@@ -24,7 +22,7 @@ window.addEventListener("load", function(){
         document.querySelector(activePaneID).classList.add("active");
     }
     
-    if (stParams.st_pojo_active) {    
+    if (stParams.st_pojo_active ||  stParams.st_jquery_active) {    
         // process parameters passed in from PHP: 
         const st_endpoint = stParams.st_api_url; 
         const st_api_key =  stParams.st_api_key;
@@ -43,10 +41,20 @@ window.addEventListener("load", function(){
             stJson.innerHTML = "LOADING....";
         }
 
-        loadResults(combined_info_url, st_api_key, function(jsonData){
-            console.log("Created ScanTrust Javascript object: window.stc : " + window.stc);
-            console.log("setting shortcodes:")
-            shortCodes(jsonData);
+        loadResults(combined_info_url, st_api_key, function(stc){
+            if (stParams.st_jquery_active) {
+                window.stc = stc;
+                console.log("Created ScanTrust Javascript object: window.stc : " + window.stc);
+            }
+            if (stParams.st_jquery_active) {
+                if (JQuery) { 
+                    JQuery.stc = stc;               
+                } else {
+                    console.log("ERROR: JQuery not found!");
+                }
+            }
+            console.log("updating shortcodes:")
+            shortCodes(stc);
         }); 
 
     } 

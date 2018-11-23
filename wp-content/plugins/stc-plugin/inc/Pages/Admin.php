@@ -57,30 +57,6 @@ class Admin extends BaseController {
             //     'menu_slug' => 'scantrust_plugin_cpt',
             //     'callback' => array($this->callbacks, 'cptDashboard')
             // ],
-            // [
-            //     'parent_slug' => 'scantrust_plugin', 
-            //     'page_title' => 'Campaigns', 
-            //     'menu_title' => 'Campaign Data', 
-            //     'capability' => 'manage_options',
-            //     'menu_slug' => 'scantrust_plugin_campaigns',
-            //     'callback' => function() { echo '<h1>Placeholder: Campaign Settings</h1>'; }
-            // ],
-            // [
-            //     'parent_slug' => 'scantrust_plugin', 
-            //     'page_title' => 'Product Settings', 
-            //     'menu_title' => 'Product Data', 
-            //     'capability' => 'manage_options',
-            //     'menu_slug' => 'scantrust_plugin_products',
-            //     'callback' => function() { echo '<h1>Placeholder: Product Settings</h1>'; }
-            // ],
-            // [
-            //     'parent_slug' => 'scantrust_plugin', 
-            //     'page_title' => 'Scan Data Collection', 
-            //     'menu_title' => 'Scan Data', 
-            //     'capability' => 'manage_options',
-            //     'menu_slug' => 'scantrust_plugin_scandata',
-            //     'callback' => function() { echo '<h1>Placeholder: Scan Data Collection</h1>'; }
-            // ]
         ];
 
     }
@@ -109,7 +85,10 @@ class Admin extends BaseController {
                 'option_group'=> 'st_options_group',
                 'option_name' => 'st_pojo_active',
             ),
-            
+            array(
+                'option_group'=> 'st_options_group',
+                'option_name' => 'st_jquery_active',
+            ),
         );
         $this->settings->setSettings( $args );
     } 
@@ -176,12 +155,23 @@ class Admin extends BaseController {
             ),
             array(
                 'id'=> 'st_pojo_active',
-                'title' => 'Provide POJO',
+                'title' => 'Provide POJO (window.stc)',
                 'callback' => array( $this->callbacks, 'stCheckboxField'),
                 'page' => 'scantrust_plugin',
                 'section' => 'st_admin_index',
                 'args' => array(
                     'label_for' => 'st_pojo_active',
+                    'class' => 'checkbox-class'
+                )
+            ),
+            array(
+                'id'=> 'st_jquery_active',
+                'title' => 'Provide JQuery global (JQuery.Stc)',
+                'callback' => array( $this->callbacks, 'stCheckboxField'),
+                'page' => 'scantrust_plugin',
+                'section' => 'st_admin_index',
+                'args' => array(
+                    'label_for' => 'st_jquery_active',
                     'class' => 'checkbox-class'
                 )
             )

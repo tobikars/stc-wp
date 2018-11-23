@@ -31,9 +31,7 @@ Redirects to:<br/>
 <PRE class="msg" id="st_uid_queryvar_msg"></PRE>
 <PRE class="msg" id="st_uid_msg"></PRE>
 
-<PRE class="msg" id="config_error_msg"></PRE>
+<PRE class="msg" id="config_check_msg"></PRE>
 
 <h3>Scan JSON:</h3>
 <PRE class="msg" id="st-json"></PRE>
-
-

@@ -17,7 +17,7 @@ namespace Inc;
             Pages\Admin::class,
             Base\Enqueue::class,
             Base\SettingsLinks::class,
-            Base\QueryVars::class,
+            Base\JsObjectsManager::class,
             Base\ShortCodesManager::class
         ];
     }

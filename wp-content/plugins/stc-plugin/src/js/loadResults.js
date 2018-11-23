@@ -15,10 +15,9 @@ export function loadResults(url, api_key, cb) {
         if (Http.readyState==4 && Http.status==200)
         {
             console.log("Data loaded: " +  Http.responseText.length/1024 + "Kb");
-
             // create a nice set of objects and make it available to the window as a POJO
-            window.stc = JSON.parse(Http.responseText);
-            cb(Http.responseText);
+            let stc = JSON.parse(Http.responseText);
+            cb(stc);
         }
     }
 }
